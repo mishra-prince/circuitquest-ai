@@ -20,7 +20,7 @@ afterEach(() => vi.unstubAllEnvs());
 describe("extraction route", () => {
   it("returns a clearly labeled demo without a key", async () => {
     const r = await POST(request({ text: "A AND B" }));
-    const data = await r.json();
+    const data = await r.json() as { source: string; message: string; problem: unknown };
     expect(data.source).toBe("demo");
     expect(data.message).toContain("not an interpretation");
     expect(generate).not.toHaveBeenCalled();
@@ -56,7 +56,7 @@ describe("extraction route", () => {
   it("calls Gemma and returns only validated output", async () => {
     vi.stubEnv("GEMINI_API_KEY", "test-only");
     generate.mockResolvedValue({ text: JSON.stringify(samples[2]) });
-    const data = await (await POST(request({ text: "(A AND B) OR C" }))).json();
+    const data = await (await POST(request({ text: "(A AND B) OR C" }))).json() as { source: string; message: string; problem: unknown };
     expect(data.source).toBe("gemma");
     expect(data.problem).toEqual(samples[2]);
     expect(generate.mock.calls[0][0].model).toBe("gemma-4-26b-a4b-it");
@@ -78,7 +78,7 @@ describe("extraction route", () => {
   it("labels service failure as fallback", async () => {
     vi.stubEnv("GEMINI_API_KEY", "test-only");
     generate.mockRejectedValue(new Error("secret provider detail"));
-    const data = await (await POST(request({ text: "A XOR B" }))).json();
+    const data = await (await POST(request({ text: "A XOR B" }))).json() as { source: string; message: string; problem: unknown };
     expect(data.source).toBe("demo");
     expect(data.message).not.toContain("secret");
     expect(data.message).toContain("not interpreted");

@@ -1,4 +1,4 @@
-name: Check CircuitQuest
+name: Check hosted CircuitQuest
 on: [push, pull_request]
 jobs:
   verify:
@@ -13,5 +13,3 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e

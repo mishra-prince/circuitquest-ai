@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { z } from "zod";
 import ElectronicsStudio from "@/components/ElectronicsStudio";
 import CircuitDiagram from "@/components/CircuitDiagram";
 import {
@@ -165,10 +166,12 @@ export default function Home() {
         body: JSON.stringify({ text, image, mimeType: file?.type }),
         signal: AbortSignal.timeout(40000),
       });
-      const data = await response.json();
-      if (!response.ok) throw Error(data.error || "Extraction failed");
-      problemSchema.parse(data.problem);
-      setCandidate(data);
+      const data: unknown = await response.json();
+      if (!response.ok) {
+        const failure = z.object({ error: z.string() }).safeParse(data);
+        throw Error(failure.success ? failure.data.error : "Extraction failed");
+      }
+      setCandidate(z.object({ problem: problemSchema, source: z.string(), message: z.string() }).parse(data));
     } catch (e) {
       setNotice(
         e instanceof Error

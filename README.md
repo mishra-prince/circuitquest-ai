@@ -1,3 +1,11 @@
+# Hosted edition
+
+This branch adapts CircuitQuest AI to Vinext and Cloudflare Workers for Sites hosting.
+
+Website: https://circuitquest-ai.abuzzloon1.chatgpt.site (requires the owner’s ChatGPT sign-in).
+
+Run `npm ci`, `npm test`, `npm run typecheck`, and `npm run build`. Use `npm run dev` for local development. Production runtime secrets are configured through Sites, never in source. `GEMINI_API_KEY` enables real inference; without it, uploads return the clearly labeled built-in demo. The original Next.js edition remains on the GitHub main branch.
+
 # CircuitQuest AI
 
 **Turn digital electronics problems into playable circuit repair missions, then build circuits, measure signals, and solve engineering missions.**
