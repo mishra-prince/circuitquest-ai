@@ -1,3 +1,5 @@
+**Hosted website:** [Open CircuitQuest AI](https://circuitquest-ai.abuzzloon1.chatgpt.site) — owner sign-in required. Games, K-maps and simulation run without an API key; AI uploads use the labeled demo until a server-side Gemini key is configured. Hosting source is on the `sites-hosting` branch.
+
 # CircuitQuest AI
 
 **Turn digital electronics problems into playable circuit repair missions, then build circuits, measure signals, and solve engineering missions.**
